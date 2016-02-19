@@ -1,0 +1,74 @@
+﻿@model Pwc.Test.Lib.Models.KisaErdModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/js/home-index.js")"></script>
+}
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<hr />
+
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainform", @class = "form-horizontal" }))
+        {
+
+            
+            <div class="form-group">
+                @Html.LabelFor(x => x.fio, "Name and Last name", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.fio, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-10">
+                    <img src="@Url.Content(Model.captcha_url)" id="captchaimg" alt="Captcha image" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.captcha_response, "Сaptcha", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.captcha_response, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" name="btn" value="Send" class="btn btn-primary" id="sendbtn" />
+                </div>
+            </div>
+            
+            @Html.HiddenFor(x => x.captcha_token)
+            @Html.HiddenFor(x => x.captcha_sid)
+            @Html.HiddenFor(x => x.form_build_id)
+            @Html.HiddenFor(x => x.form_id)
+
+        }
+
+<hr />
+<div id="loading" style="display:none;" class="row">
+    <p>processing request...</p>
+</div>
+<div class="row">
+    <p id="exception_text">@Model.exception_text</p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="responcetext" class="table">
+            </table>
+        </div>
+    </div>
+    <p id="emptyResult" style="display:none;">The results are empty</p>
+</div>
